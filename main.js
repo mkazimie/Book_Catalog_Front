@@ -11,6 +11,7 @@ $(function() {
             .append("Typ: " + data.type + "<br />");
     }
     function renderBooks(books) {
+        app.empty();
         books.forEach(function(book) {
             var bookElement = $("<div>");
             var bookTitle = $("<div>");
@@ -38,5 +39,24 @@ $(function() {
             url: "http://localhost:8282/books"
         }).done(renderBooks);
     }
+    function handleForm() {
+        $("#bookForm").on("submit", function(e) {
+            e.preventDefault();
+            var data = {};
+            $(this)
+                .find("input")
+                .each(function() {
+                    var name = $(this).attr("name");
+                    data[name] = $(this).val();
+                });
+            $.ajax({
+                method: "POST",
+                url: "http://localhost:8282/books",
+                contentType: "application/json",
+                data: JSON.stringify(data)
+            }).done(fetchBooks);
+        });
+    }
     fetchBooks();
+    handleForm();
 });
