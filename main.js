@@ -49,6 +49,7 @@ $(function() {
                     var name = $(this).attr("name");
                     data[name] = $(this).val();
                 });
+
             $.ajax({
                 method: "POST",
                 url: "http://localhost:8282/books",
