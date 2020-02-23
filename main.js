@@ -16,6 +16,7 @@ $(function() {
             var bookElement = $("<div>");
             var bookTitle = $("<div>");
             var bookDetails = $("<div>");
+            var deleteButton = $("<button>Delete book</button>");
             bookElement.addClass("book").appendTo(app);
             bookTitle
                 .addClass("book-title")
@@ -31,8 +32,16 @@ $(function() {
                 });
             });
             bookDetails.addClass("book-details").appendTo(bookElement);
+            deleteButton.addClass("delete-button").appendTo(bookElement);
+            deleteButton.one("click", function () {
+                $.ajax({
+                    method: "DELETE",
+                    url: "http://localhost:8282/books/" + book.id
+                }).done(fetchBooks);
+            })
         });
     }
+
     function fetchBooks() {
         $.ajax({
             method: "GET",
